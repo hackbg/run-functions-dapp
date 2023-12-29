@@ -66,7 +66,12 @@ export const getTweetOnchain = async (txHash: string) => {
 
 export const requestTweetOnchain = async (username: string) => {
   // Mock
-  const randomStr = Math.random().toString(36).substring(2, 12)
+  const contract = getXConsumerContract()
+  const txHash = await contract.requestLastTweet(
+    '44196397',
+    0,
+    process.env.X_SECRET_VERSION_ID as string,
+  )
   const tweet = await fetchTweetData(username)
-  return { txHash: randomStr, tweet }
+  return { txHash, tweet }
 }

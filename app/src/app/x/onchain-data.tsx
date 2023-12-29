@@ -21,6 +21,7 @@ export const OnchainData = ({ handle }: OnchainDataProps) => {
 
   useEffect(() => {
     const requestOnchainTweet = async () => {
+      console.log(handle)
       const response = await fetch('/api/onchain-tweet', {
         method: 'POST',
         body: JSON.stringify({ username: handle }),
@@ -37,14 +38,14 @@ export const OnchainData = ({ handle }: OnchainDataProps) => {
 
   useEffect(() => {
     if (!txHash) return
-    const interval = setInterval(async () => {
-      const response = await fetch(`/api/onchain-tweet?txHash=${txHash}`)
-      const result = await response.json()
-      if (result.data) {
-        clearInterval(interval)
-        setOnchainData(result.data)
-      }
-    }, 1000)
+    //const interval = setInterval(async () => {
+    //const response = await fetch(`/api/onchain-tweet?txHash=${txHash}`)
+    //const result = await response.json()
+    //if (result.data) {
+    // clearInterval(interval)
+    // setOnchainData(result.data)
+    //}
+    //}, 1000)
   }, [txHash])
 
   if (error) {
