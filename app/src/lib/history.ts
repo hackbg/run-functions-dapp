@@ -7,6 +7,7 @@ import {
   getCurrentWeatherCode,
 } from './fetch-weather'
 import { getUnixTime } from 'date-fns'
+import { fetchTweetData } from './fetch-tweet'
 
 export const addToWeatherHistory = async ({
   txHash,
@@ -50,20 +51,12 @@ export const addToWeatherHistory = async ({
 
 export const addToTweetHistory = async ({
   txHash,
+  requestId,
   username,
-  name,
-  profileImageUrl,
-  tweetText,
-  media,
-  tweetId,
 }: {
   txHash: string
+  requestId: string
   username: string
-  name: string
-  profileImageUrl: string
-  tweetText: string
-  media: string[]
-  tweetId: string
 }) => {
   const currentEntries = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
   if (currentEntries.some((e) => e.txHash === txHash)) {
@@ -72,16 +65,28 @@ export const addToTweetHistory = async ({
   if (currentEntries.length >= 10) {
     await kv.rpop('tweets', 1)
   }
-  const timestamp = getUnixTime(Date.now())
-  const tweetEntry = {
+
+  const lastTweetResponse = await fetchTweetData(username)
+
+  const name = lastTweetResponse?.data?.name || ''
+  const profileImageUrl = lastTweetResponse?.data?.profile_image_url || ''
+  const tweetText = lastTweetResponse?.includes?.tweets[0].text || ''
+  const tweetId = lastTweetResponse?.includes?.tweets[0].id || ''
+  const timestamp = new Date(
+    lastTweetResponse?.includes?.tweets[0].created_at || '',
+  ).getTime()
+
+  const tweetEntry: TweetHistoryEntry = {
+    name,
     txHash,
     username,
-    name,
     profileImageUrl,
     tweetText,
     timestamp,
-    media,
     tweetId,
+    media: [],
+    requestId,
   }
+
   await kv.lpush<TweetHistoryEntry>('tweets', tweetEntry)
 }
