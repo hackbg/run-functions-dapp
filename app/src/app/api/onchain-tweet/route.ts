@@ -40,7 +40,6 @@ export async function GET(request: NextRequest) {
 
   if (!requestId) return NextResponse.error()
 
-  const data = await getTweetOnchain(requestId + '')
-
-  return NextResponse.json({ data })
+  const [, text] = await getTweetOnchain(requestId)
+  return NextResponse.json({ text })
 }
