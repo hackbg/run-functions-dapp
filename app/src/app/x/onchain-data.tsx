@@ -42,9 +42,9 @@ export const OnchainData = ({ handle }: OnchainDataProps) => {
     const interval = setInterval(async () => {
       const response = await fetch(`/api/onchain-tweet?requestId=${txHash}`)
       const result = await response.json()
-      if (result.data) {
+      if (result.text) {
         clearInterval(interval)
-        setOnchainData(result.data)
+        setOnchainData(result.text)
       }
     }, 1000)
   }, [txHash])

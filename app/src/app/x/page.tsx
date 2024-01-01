@@ -14,7 +14,7 @@ export default async function XPage({
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const handle = searchParams['handle'] as string
-
+  console.log(handle)
   return (
     <main className="container px-6 md:px-10">
       <div className="grid gap-10 border-b border-b-border py-10 md:grid-cols-[1fr_4px_minmax(0,_1fr)_4px_1fr]">

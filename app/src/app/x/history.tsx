@@ -11,21 +11,8 @@ const truncate = (string: string) =>
   string.length > 105 ? `${string.slice(0, 105)}...` : string
 
 const History = async () => {
-  //const data = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
+  const data = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
 
-  const data = [
-    {
-      txHash: '0x123',
-      name: 'Test Name',
-      username: 'test',
-      profileImageUrl:
-        'https://pbs.twimg.com/profile_images/1684778635608444928/UoV4Ttdd_400x400.jpg',
-      tweetText: 'This is a test tweet',
-      timestamp: 1629936000,
-      media: [],
-      tweetId: '123',
-    },
-  ]
   return (
     <div className="lg:border-l-border lg:w-[340px] lg:shrink-0 lg:border-l lg:pl-10">
       <h3 className="mb-9 text-2xl font-medium tracking-[-0.24px]">
@@ -128,11 +115,7 @@ const History = async () => {
                         />
                       </a>
                     </span>
-                    <span className="text-[14px] text-[#6D7380]">
-                      {formatDistanceToNow(fromUnixTime(timestamp), {
-                        addSuffix: true,
-                      })}
-                    </span>
+                    <span className="text-[14px] text-[#6D7380]"></span>
                   </div>
                 </div>
                 // </a>

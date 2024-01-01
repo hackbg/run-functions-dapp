@@ -21,6 +21,8 @@ export async function POST(request: NextRequest) {
   const { txHash, requestId } = await requestTweetOnchain(username)
   if (!txHash) return NextResponse.error()
 
+  console.log({ txHash, requestId, username })
+
   try {
     await addToTweetHistory({
       txHash,

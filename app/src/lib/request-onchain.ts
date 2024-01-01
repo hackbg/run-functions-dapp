@@ -59,9 +59,8 @@ const getXConsumerContract = () => {
 
 export const getTweetOnchain = async (requestId: string) => {
   const contract = getXConsumerContract()
-  const result = await contract.requests(
-    '0x4ad66a34e9a7aa231d5926b2cb41eb38be7dfac39d1589a4b6f3af086676f31e',
-  )
+  const result = await contract.requests(requestId)
+  console.log(result)
   return result
 }
 

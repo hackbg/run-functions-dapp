@@ -7,7 +7,13 @@ import {
   getCurrentWeatherCode,
 } from './fetch-weather'
 import { getUnixTime } from 'date-fns'
-import { fetchTweetData } from './fetch-tweet'
+import {
+  fetchTweetData,
+  getProfileImageUrl,
+  getTweetAuthorName,
+  getTweetId,
+  getTweetText,
+} from './fetch-tweet'
 
 export const addToWeatherHistory = async ({
   txHash,
@@ -68,13 +74,15 @@ export const addToTweetHistory = async ({
 
   const lastTweetResponse = await fetchTweetData(username)
 
-  const name = lastTweetResponse?.data?.name || ''
-  const profileImageUrl = lastTweetResponse?.data?.profile_image_url || ''
-  const tweetText = lastTweetResponse?.includes?.tweets[0].text || ''
-  const tweetId = lastTweetResponse?.includes?.tweets[0].id || ''
+  const name = getTweetAuthorName(lastTweetResponse)
+  const profileImageUrl = getProfileImageUrl(lastTweetResponse)
+  const tweetText = getTweetText(lastTweetResponse)
+  const tweetId = getTweetId(lastTweetResponse)
   const timestamp = new Date(
     lastTweetResponse?.includes?.tweets[0].created_at || '',
   ).getTime()
+
+  console.log(tweetText)
 
   const tweetEntry: TweetHistoryEntry = {
     name,
