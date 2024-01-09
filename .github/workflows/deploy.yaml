@@ -4,7 +4,7 @@ env:
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-    AVALANCHE_FUJI_RPC_URL: ${{ secrets.POLYGON_MUMBAI_RPC_URL }}
+    AVALANCHE_FUJI_RPC_URL: ${{ secrets.AVALANCHE_FUJI_RPC_URL }}
     X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
 
 on:
