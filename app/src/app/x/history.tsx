@@ -7,11 +7,17 @@ import LoadingSpinner from '@/components/loading-spinner'
 import { TweetHistoryEntry } from '@/types'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
-const truncate = (string: string) =>
-  string.length > 105 ? `${string.slice(0, 105)}...` : string
+const truncate = (string: any) => {
+  if (typeof string === 'string') {
+    return string.length > 105 ? `${string.slice(0, 105)}...` : string
+  }
+  return ''
+}
 
 const History = async () => {
   const data = await kv.lrange<TweetHistoryEntry>('tweets', 0, -1)
+
+  console.log(data.map(({ tweetText }) => typeof tweetText))
 
   return (
     <div className="lg:border-l-border lg:w-[340px] lg:shrink-0 lg:border-l lg:pl-10">
